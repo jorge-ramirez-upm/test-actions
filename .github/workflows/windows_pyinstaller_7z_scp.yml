@@ -46,12 +46,12 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: package
-    - name: copy file via ssh password
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.DEGENNES_IP }}
-        username: ${{ secrets.DEGENNES_USER }}
-        password: ${{ secrets.DEGENNES_PASSWORD }}
-        source: "dist/testJR.zip"
-        target: "REPTATE_PACKAGES"
-        
+      - uses: actions/checkout@master
+      - uses: contention/rsync-deployments@master
+        with:
+          USER_AND_HOST: jramirez@138.100.78.66
+          DEST: /home/jramirez/REPTATE_PACKAGES
+          SRC: dist/
+          RSYNC_OPTIONS: -avzr --delete --exclude node_modules --exclude '.git*'
+        env:
+          DEPLOY_KEY: ${{ secrets.DEGENNES_SSH_KEY }}
