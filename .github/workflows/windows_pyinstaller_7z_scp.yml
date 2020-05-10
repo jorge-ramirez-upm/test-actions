@@ -34,7 +34,7 @@ jobs:
       with:
         key: ${{ secrets.DEGENNES_SSH_KEY }}
         name: id_rsa
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        known_hosts: ${{ secrets.DEGENNES_KNOWN_HOSTS }}
         config: ${{ secrets.CONFIG }} # ssh_config; optional
     - name: Upload
       env:
