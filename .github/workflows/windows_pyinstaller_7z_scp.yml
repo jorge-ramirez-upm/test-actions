@@ -46,12 +46,13 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: package
-      - uses: actions/checkout@master
-      - uses: contention/rsync-deployments@master
-        with:
-          USER_AND_HOST: jramirez@138.100.78.66
-          DEST: /home/jramirez/REPTATE_PACKAGES
-          SRC: dist/
-          RSYNC_OPTIONS: -avzr --delete --exclude node_modules --exclude '.git*'
-        env:
-          DEPLOY_KEY: ${{ secrets.DEGENNES_SSH_KEY }}
+    - name: Copy file via rsync
+      uses: contention/rsync-deployments@master
+      with:
+        USER_AND_HOST: jramirez@138.100.78.66
+        DEST: /home/jramirez/REPTATE_PACKAGES
+        SRC: dist/
+        RSYNC_OPTIONS: -avzr --delete --exclude node_modules --exclude '.git*'
+      env:
+        DEPLOY_KEY: ${{ secrets.DEGENNES_SSH_KEY }}
+
