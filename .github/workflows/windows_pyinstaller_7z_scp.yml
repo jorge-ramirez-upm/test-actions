@@ -31,5 +31,5 @@ jobs:
         pyinstaller -w --name=testJR testJR\__main__.py
         cd dist
         7z.exe a testJR.zip testJR
-        echo "$DEGENNES_PASSWORD" | scp testJR.zip $"DEGENNES_USER"@$"DEGENNES_IP":.
+        echo "$DEGENNES_PASSWORD" | scp testJR.zip "$DEGENNES_USER"@"$DEGENNES_IP":.
         
