@@ -1,6 +1,7 @@
 import os
 import sys
 from setuptools import setup, find_packages
+import versioneer
 #import functools
 #import glob
 
@@ -55,7 +56,7 @@ setup(
 	url='http://github.com/jorge-ramirez-upm/test-actions',
 	packages=find_packages(),
     package_data={'': ['*.ui', '*.qrc', '*.npy', '*.so', '*.npz']},
-    data_files=list_data_files,
+    #data_files=list_data_files,
 	install_requires=requirements,
 	entry_points={
         'console_scripts': [
