@@ -53,7 +53,7 @@ jobs:
         DEST: /home/jramirez/REPTATE_PACKAGES
         SRC: package
         RSYNC_OPTIONS: -avzr --delete --exclude node_modules --exclude '.git*'
-        args: "-avzr --delete --exclude .htaccess --exclude /uploads/ package jramirez@138.100.78.66:/home/jramirez/REPTATE_PACKAGES"
+        args: "-avzr package jramirez@138.100.78.66:/home/jramirez/REPTATE_PACKAGES"
       env:
         DEPLOY_KEY: ${{ secrets.DEGENNES_SSH_KEY }}
 
