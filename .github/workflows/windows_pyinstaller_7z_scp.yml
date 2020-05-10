@@ -29,17 +29,12 @@ jobs:
       run: |
         cd dist
         7z.exe a testJR.zip testJR
-    - name: Install SSH key
-      uses: shimataro/ssh-key-action@v2
+    - name: Copy folder content recursively to remote
+      uses: garygrossgarten/github-action-scp@release
       with:
-        key: ${{ secrets.DEGENNES_SSH_KEY }}
-        name: id_rsa
-        known_hosts: ${{ secrets.DEGENNES_KNOWN_HOSTS }}
-        config: ${{ secrets.CONFIG }} # ssh_config; optional
-    - name: Upload
-      env:
-        DEGENNES_IP: ${{ secrets.DEGENNES_IP }}
-        DEGENNES_USER: ${{ secrets.DEGENNES_USER }}
-      run: |
-        scp testJR.zip %DEGENNES_USER%@%DEGENNES_IP%:.
+        local: dist/testJR.zip
+        remote: REPTATE_PACKAGES
+        host: ${{ secrets.DEGENNES_IP }}
+        username: ${{ secrets.DEGENNES_USER }}
+        password: ${{ secrets.DEGENNES_PASSWORD }}
         
