@@ -29,11 +29,17 @@ jobs:
       run: |
         cd dist
         7z.exe a testJR.zip testJR
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.DEGENNES_SSH_KEY }}
+        name: id_rsa
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        config: ${{ secrets.CONFIG }} # ssh_config; optional
     - name: Upload
       env:
         DEGENNES_IP: ${{ secrets.DEGENNES_IP }}
         DEGENNES_USER: ${{ secrets.DEGENNES_USER }}
-        DEGENNES_PASSWORD: ${{ secrets.DEGENNES_PASSWORD }}
       run: |
-        echo "$DEGENNES_PASSWORD" | scp testJR.zip "$DEGENNES_USER"@"$DEGENNES_IP":.
+        scp testJR.zip %DEGENNES_USER%@%DEGENNES_IP%:.
         
