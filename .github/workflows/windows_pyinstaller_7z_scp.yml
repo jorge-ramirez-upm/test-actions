@@ -35,8 +35,8 @@ jobs:
         makensis.exe dist\testJR.nsi
     - name: Delete unnecessary files
       run: |
-        del dist\testJR.nsi
-        rmdir /S/Q dist\testJR
+        Remove-Item -path .\dist\testJR.nsi
+        Remove-Item -path .\dist\testJR -recurse
     - name: Upload zip and installation files for later copy
       uses: actions/upload-artifact@v1
       with: 
