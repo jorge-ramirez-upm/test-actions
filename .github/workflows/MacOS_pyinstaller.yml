@@ -1,0 +1,66 @@
+# This workflows will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Run Pyinstaller on MacOS
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements_pyinstaller.txt
+        pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
+    - name: Build executable
+      run: |
+        pyinstaller -w --hidden-import=packaging --hidden-import=packaging.version --hidden-import=packaging.specifiers --hidden-import=packaging.requirements --hidden-import=scipy._lib.messagestream --hidden-import=pandas._libs.tslibs.timedeltas --name=testJR testJR\__main__.py
+    # - name: Compress
+    #   run: |
+    #     cd dist
+    #     7z.exe a testJR.zip testJR
+    # - name: Run NSIS to create Windows installer
+    #   run: |
+    #     makensis.exe dist\testJR.nsi
+    # - name: Delete unnecessary files
+    #   run: |
+    #     Remove-Item -path .\dist\testJR.nsi
+    #     Remove-Item -path .\dist\testJR -recurse
+    # - name: Upload zip and installation files for later copy
+      uses: actions/upload-artifact@v1
+      with: 
+        name: package
+        path: dist/
+
+  # deploy:
+  
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Download zip file previously built
+  #     uses: actions/download-artifact@v1
+  #     with:
+  #       name: package
+  #   - name: Copy file via rsync
+  #     uses: contention/rsync-deployments@master
+  #     with:
+  #       USER_AND_HOST: jramirez@138.100.78.66
+  #       DEST: /home/jramirez/REPTATE_PACKAGES
+  #       SRC: package
+  #       RSYNC_OPTIONS: -avzr --delete --exclude node_modules --exclude '.git*'
+  #       args: "-avzr package jramirez@138.100.78.66:/home/jramirez/REPTATE_PACKAGES"
+  #     env:
+  #       DEPLOY_KEY: ${{ secrets.DEGENNES_SSH_KEY }}
+
