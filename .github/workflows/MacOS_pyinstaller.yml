@@ -26,7 +26,7 @@ jobs:
         pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
     - name: Build executable
       run: |
-        pyinstaller -w --hidden-import=packaging --hidden-import=packaging.version --hidden-import=packaging.specifiers --hidden-import=packaging.requirements --name=testJR testJR/__main__.py
+        pyinstaller macos.spec
     # - name: Compress
     #   run: |
     #     cd dist
