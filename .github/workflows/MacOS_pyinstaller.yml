@@ -38,7 +38,7 @@ jobs:
     #   run: |
     #     Remove-Item -path .\dist\testJR.nsi
     #     Remove-Item -path .\dist\testJR -recurse
-    # - name: Upload zip and installation files for later copy
+    - name: Upload the build file for later copy
       uses: actions/upload-artifact@v1
       with: 
         name: package
