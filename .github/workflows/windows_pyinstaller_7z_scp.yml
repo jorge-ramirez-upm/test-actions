@@ -23,9 +23,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_pyinstaller.txt
+        pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
     - name: Build executable
       run: |
-        pyinstaller -w --name=testJR testJR\__main__.py
+        pyinstaller -w --hidden-import=packaging --hidden-import=packaging.version --hidden-import=packaging.specifiers --hidden-import=packaging.requirements --hidden-import=scipy._lib.messagestream --hidden-import=pandas._libs.tslibs.timedeltas --name=testJR testJR\__main__.py
     - name: Compress
       run: |
         cd dist

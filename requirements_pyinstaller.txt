@@ -1,2 +1,4 @@
 pip>=9.0
-pyinstaller
+packaging
+pandas
+scipy
