@@ -8,6 +8,7 @@ from PyQt5 import QtCore, QtWidgets
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+import testJR
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -30,10 +31,24 @@ class MainWindow(QtWidgets.QMainWindow):
         sc.axes.set_xlabel('time')
         sc.axes.set_ylabel('life')
 
-        self.setCentralWidget(sc)
+        # Get version
+        verdata = testJR._version.get_versions()
+        self.ver = verdata['version'].split('+')[0]
+        self.date = verdata['date'].split('T')[0]
+        self.build = verdata['version']
+        self.setWindowTitle('test v'+ self.ver + ' ' + self.date)
 
+        tb = QtWidgets.QToolBar()
+        self.aboutaction = tb.addAction('About')
+        self.addToolBar(tb)
+        self.aboutaction.triggered.connect(self.about)
+
+        self.setCentralWidget(sc)
         self.show()
 
+    def about(self):
+        QtWidgets.QMessageBox.information(self, 'About test',
+                                'test v' + self.ver + ' ' + self.date + '\nBUILD: ' + self.build)
 
 def main():
     plt.xkcd()

@@ -22,8 +22,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install packaging
-        pip install pyinstaller
+        pip install -r requirements_pyinstaller.txt
     - name: Build executable
       run: |
         pyinstaller -w --name=testJR testJR\__main__.py
@@ -31,11 +30,14 @@ jobs:
       run: |
         cd dist
         7z.exe a testJR.zip testJR
-    - name: Upload zip file for later copy
+    - name: Run NSIS to create Windows installer
+      run: |
+        makensis.exe dist\testJR.nsi
+    - name: Upload zip and installation files for later copy
       uses: actions/upload-artifact@v1
       with: 
         name: package
-        path: dist/testJR.zip
+        path: ['dist/testJR.zip', 'dist/testJR.exe'] 
 
   deploy:
   
