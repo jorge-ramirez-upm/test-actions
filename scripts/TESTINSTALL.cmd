@@ -9,9 +9,19 @@ REM GET PYTHON INSTALLATION FOLDER
 set /P WINPYDIR=<tmp.txt
 echo %WINPYDIR%
 
+REM GET PYTHON VERSION
+(python -c "import sys; print('.'.join(map(str, sys.version_info[:3])))") > tmp.txt
+set /P PYTHONVERSION=<tmp.txt
+echo %PYTHONVERSION%
+del tmp.txt
+
+echo ###################################################################
+echo Creating installation package on Windows for Python %PYTHONVERSION%
+echo Python running on folder %WINPYDIR%
+echo ###################################################################
+
 REM GET PYTHON (SET VERSION EQUAL TO CURRENT VERSION ON YOUR SYSTEM, WHERE REPTATE IS WORKING)
 REM AND TRY TO GET IT TO BE THE SAME VERSION AS IN THE GITHUB SERVER
-set PYTHONVERSION=3.7.7
 set FILENAME=python-%PYTHONVERSION%-embed-amd64.zip
 curl -s -f -L -o %BUILDFOLDER%\%FILENAME% https://www.python.org/ftp/python/%PYTHONVERSION%/%FILENAME%
 
