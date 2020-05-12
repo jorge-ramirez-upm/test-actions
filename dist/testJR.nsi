@@ -2,7 +2,7 @@
 Name "testJR"
 
 ; The file to write
-OutFile "testJR.exe"
+OutFile "Install_testJR.exe"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user
@@ -29,6 +29,11 @@ Section "" ;No components page, name is not important
   SetOutPath $INSTDIR
   
   ; Put file there
-  File /r "testJR\*"  
+  File /r "testJR\*" 
+
+	# Start Menu
+	createDirectory "$SMPROGRAMS\testJR"
+	createShortCut "$SMPROGRAMS\testJR\testJR.lnk" "$INSTDIR\pythonw.exe" "-m testJR" ""
+   
   
 SectionEnd ; end the section
