@@ -55,6 +55,6 @@ for f in *.whl; do python3 -m pip install $f; done
 rm -f *.whl
 python3 -c "import compileall; compileall.compile_dir('./', force=True)"
 
-# INVOKE makensis
-cd ..
-makensis testJR.nsi
+# # INVOKE makensis
+# cd ..
+# makensis testJR.nsi
