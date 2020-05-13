@@ -6,8 +6,8 @@ mkdir -p $BUILDFOLDER
 
 # GET PYTHON INSTALLATION FOLDER
 (python3 -c "import sys; print(sys.exec_prefix)") > tmp.txt
-WINPYDIR=$(<tmp.txt)
-echo $WINPYDIR
+PYDIR=$(<tmp.txt)
+echo $PYDIR
 
 # GET PYTHON VERSION
 (python3 -c "import sys; print('.'.join(map(str, sys.version_info[:3])))") > tmp.txt
@@ -16,8 +16,8 @@ echo $PYTHONVERSION
 rm -f tmp.txt
 
 echo "###################################################################"
-echo "Creating installation package on Windows for Python $PYTHONVERSION"
-echo "Python running on folder $WINPYDIR"
+echo "Creating installation package on Mac for Python $PYTHONVERSION"
+echo "Python running on folder $PYDIR"
 echo "###################################################################"
 
 # GET PYTHON (SET VERSION EQUAL TO CURRENT VERSION ON YOUR SYSTEM, WHERE REPTATE IS WORKING)
@@ -33,11 +33,11 @@ python3 setup.py bdist_wheel --dist-dir $BUILDFOLDER
 mkdir -p $OUTPUTFOLDER
 # mkdir -p ${OUTPUTFOLDER}/tcl
 # mkdir -p ${OUTPUTFOLDER}/tkinter
-# cp -r ${WINPYDIR}/tcl ${OUTPUTFOLDER}/tcl
-# cp -r ${WINPYDIR}/Lib/tkinter ${OUTPUTFOLDER}/tkinter
-# cp ${WINPYDIR}/DLLs/_tkinter.pyd $OUTPUTFOLDER
-# cp $WINPYDIR}/DLLs/tcl86t.dll $OUTPUTFOLDER
-# cp $WINPYDIR}/DLLs/tk86t.dll $OUTPUTFOLDER
+# cp -r ${PYDIR}/tcl ${OUTPUTFOLDER}/tcl
+# cp -r ${PYDIR}/Lib/tkinter ${OUTPUTFOLDER}/tkinter
+# cp ${PYDIR}/DLLs/_tkinter.pyd $OUTPUTFOLDER
+# cp $PYDIR}/DLLs/tcl86t.dll $OUTPUTFOLDER
+# cp $PYDIR}/DLLs/tk86t.dll $OUTPUTFOLDER
 
 # UNPACK PYTHON IN THE INSTALLATION FOLDER
 tar -xvzf ${BUILDFOLDER}/${FILENAME} -C ${OUTPUTFOLDER}
